@@ -30,26 +30,19 @@ const verifyToken = (req, res, next) => {
 }
 
 router.get('/mostpopular', (req, res) => {
-    jwt.verify(req.token, 'secretkey', (err, authData) => {
-        if(err){
-            res.sendStatus(403)
+    fetch(API_URL)
+    .then(res => res.json())
+    .then((data, error) => {
+        if(error){
+            console.log(error)
         }else{
-            fetch(API_URL)
-            .then(res => res.json())
-            .then((data, error) => {
-                if(error){
-                    console.log(error)
-                }else{
-                    let movies = data.results
-                    res.json({
-                        movies: movies,
-                        authData
-                    })
-                }
+            let movies = data.results
+            res.json({
+                movies: movies,
+                authData
             })
         }
     })
-    
 })
 
 router.post('/register', async (req, res) => {
