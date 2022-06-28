@@ -38,8 +38,7 @@ router.get('/mostpopular', (req, res) => {
         }else{
             let movies = data.results
             res.json({
-                movies: movies,
-                authData
+                movies
             })
         }
     })
