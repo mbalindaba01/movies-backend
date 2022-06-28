@@ -52,6 +52,10 @@ router.get('/mostpopular', verifyToken, (req, res) => {
     
 })
 
+router.get('/', (req, res) => {
+    res.send('It works!')
+})
+
 router.post('/register', async (req, res) => {
     const user = {
         first_name: req.body.firstname,
