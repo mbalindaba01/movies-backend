@@ -29,7 +29,7 @@ const verifyToken = (req, res, next) => {
     }
 }
 
-router.get('/mostpopular', verifyToken, (req, res) => {
+router.get('/mostpopular', (req, res) => {
     jwt.verify(req.token, 'secretkey', (err, authData) => {
         if(err){
             res.sendStatus(403)
