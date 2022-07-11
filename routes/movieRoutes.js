@@ -44,6 +44,29 @@ router.get('/mostpopular', (req, res) => {
     })
 })
 
+router.get('/favorites', (req, res) => {
+    let username = 'Mbali'
+    const favorites = []
+    let faveId = 639933
+
+    fetch(API_URL)
+    .then(res => res.json())
+    .then((data, error) => {
+        if(error){
+            console.log(error)
+        }else{
+            let movies = data.results
+            let favoriteMovie = movies.filter(item => item.id==faveId)
+            favorites.push(favoriteMovie)
+            console.log(favoriteMovie)
+            db.none('update users set favorite_movies = $1 where username = $2', [favorites, username])
+            res.json({
+               favorites
+            })
+        }
+    })
+})
+//test
 router.post('/register', async (req, res) => {
     const user = {
         first_name: req.body.firstname,
@@ -54,7 +77,7 @@ router.post('/register', async (req, res) => {
     let userCheck = await db.any('select * from users where username = $1', [user.username])
     if(userCheck.length !== 0){
         res.json({
-            message: 'User already Exists'
+            message: 'User already Exists '
         })
     }else{
         //hash password and store it
